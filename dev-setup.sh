@@ -42,7 +42,7 @@ check stylua   "Lua code formatter (recommended for development)" \
 
 echo
 if (( MISSING == 0 )); then
-  echo "🎉 All dependencies present. You’re good to go!"
+  echo "All dependencies present. You’re good to go!"
 else
   echo "⚠️  Some dependencies are missing. Follow the hints above, then re-run this script."
   exit 1
