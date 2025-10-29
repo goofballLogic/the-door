@@ -7,4 +7,25 @@ jobs:
   checks:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Lua & LuaRocks
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lua5.4 luarocks
+
+      - name: Cache LuaRocks user tree
+        uses: actions/cache@v4
+        with:
+          path: ~/.luarocks
+          key: luacheck-${{ runner.os }}-${{ hashFiles('**/rockspec', '.luacheckrc') }}
+          restore-keys: |
+            luacheck-${{ runner.os }}-
+
+      - name: Install luacheck (local)
+        run: |
+          luarocks install --local luacheck
+          echo "$HOME/.luarocks/bin" >> "$GITHUB_PATH"
+  
       - run: luacheck .          
