@@ -1,7 +1,7 @@
 set -euo pipefail
 
 if [[ "$(uname -s)" != "Darwin" ]]; then
-  echo "❌ This setup script only supports macOS (Darwin)."
+  echo "This setup script only supports macOS (Darwin)."
   exit 1
 fi
 
@@ -24,6 +24,9 @@ check() {
   fi
 }
 
+check lua "Lua interpreter (required for luarocks and tooling)" \
+   "brew install lua"
+
 check love "LÖVE runtime (required to run the game)" \
    "brew install --cask love"
 
@@ -34,7 +37,7 @@ check luacheck "Lua linter (recommended)" \
    "luarocks install --local luacheck; export PATH=\"\$HOME/.luarocks/bin:\$PATH\""
 
 check stylua   "Lua code formatter (recommended for development)" \
-  "brew install stylua"
+   "brew install stylua"
 
 
 echo
