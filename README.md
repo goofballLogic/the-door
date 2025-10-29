@@ -2,4 +2,4 @@
 `dev-setup.sh` - only works for Mac but checks that lua, love2d, luarocks, luacheck and stylua are installed.   
 
 ### run
-`cd src & love .`
+`cd src && love .`
