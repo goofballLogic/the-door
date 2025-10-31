@@ -1,4 +1,5 @@
 local RoomBase = require("room_base")
+local room_manager = require("room_manager")
 local Player = require("player")
 local Switch = require("switch")
 local Door = require("door")
@@ -26,7 +27,7 @@ end
 function RoomOne.load()
   build_walls()
   player = Player.new(72, 128)
-  switch = Switch.new(160, 160)
+  switch = Switch.new("A",160, 160)
   door   = Door.new(360, 96, 16, 128)
 
   -- Listen for switch toggles
@@ -48,6 +49,11 @@ function RoomOne.update(dt)
   player:update(dt, colliders)
   switch:update(dt, player)
   door:update(dt)
+
+  if door.state == "open" and collision.aabb(player, door) then
+    room_manager.set("room_two")
+    return
+  end
 end
 
 function RoomOne.draw()

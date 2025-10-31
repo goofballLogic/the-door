@@ -6,17 +6,20 @@ Switch.__index = Switch
 
 local IMG_ON, IMG_OFF
 
-function Switch.new(x, y)
+function Switch.new(id, x, y)
   local self = setmetatable({}, Switch)
+  self.id = id          -- unique identifier (e.g. "A", "B")
   self.x, self.y = x, y
   self.w, self.h = 16, 16
   self.state = "off"
+
   if not IMG_ON then
     IMG_ON  = love.graphics.newImage("assets/sprites/switch_on.png")
     IMG_OFF = love.graphics.newImage("assets/sprites/switch_off.png")
     IMG_ON:setFilter("nearest", "nearest")
     IMG_OFF:setFilter("nearest", "nearest")
   end
+
   return self
 end
 
@@ -26,7 +29,7 @@ function Switch:tryInteract(player)
             and (player.y < self.y + self.h + pad) and (self.y - pad < player.y + player.h)
   if near then
     self.state = (self.state == "off") and "on" or "off"
-    event_bus.emit("switch:toggled", { state = self.state })
+    event_bus.emit("switch:toggled", { id = self.id, state = self.state })
   end
 end
 
